@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import Row from './Row.jsx';
 
 const Board = () => {
@@ -145,7 +145,7 @@ const Board = () => {
     rows.push(
       <div>
         <Row 
-          key={i} 
+          key={`Row${i}`} 
           index={i} 
           board={board} 
           changeBox={changeBox}
@@ -179,9 +179,7 @@ const Board = () => {
       <h2>Current Player: {currentPlayer} {softReset}</h2>
       {endDiv}
       {/* Add in the rows array (with fragments! neat!)*/}
-      <>
         {rows}
-      </>
       <h3>SCORES</h3>
       <p>
         <span className='player-1'>

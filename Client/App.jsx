@@ -4,22 +4,22 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import Board from './Board.jsx';
+import Board from './Components/Board.jsx';
 
 
 const App = () => {
   return (
     <div>
-      <Board>
+      <Board key="game-board">
         Mood Tic Tac Toe
       </Board>
       {/* The below is a reference to a lofi youtube video that will be displayed as the background */}
       <div className='video-container'>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/To-UiKVdGPU?si=xuWPSoH82ONZluUD&amp;controls=0&autoplay=1&playsinline=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/To-UiKVdGPU?si=xuWPSoH82ONZluUD&amp;controls=0&autoplay=1&playsinline=1" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
       </div>
     </div>
   );
 };
 
 const root = createRoot(document.querySelector('#root'));
-root.render(<App />);
+root.render(<App key="application"/>);
