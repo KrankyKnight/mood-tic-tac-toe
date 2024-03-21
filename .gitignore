@@ -1,0 +1,5 @@
+# Keeping the git repo clean
+
+node_modules
+dist/bundle.js
+package-lock.json
