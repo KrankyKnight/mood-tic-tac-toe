@@ -13,3 +13,9 @@ Run ```npm run dev``` to run the app
 ## Notes
 
 This code snipped was for demo purposes so there isn't a server set up to handle delivery of the production build. To that point, only the dev version is uploaded.
+
+## To Do
+
+1. Convert to Typescript
+2. Implement Testing
+3. Implement Cups
