@@ -4,12 +4,12 @@ import Row from './Row.jsx';
 const Board = () => {
 
   /* -- STATE -- */
-  const [board, setBoard] = useState({});
+  const [board, setBoard] = useState({}); // covered
   const [currentPlayer, changePlayer] = useState('X');
   const [gameOver, changeGameStatus] = useState(false);
   const [message, updateMessage] = useState('');
   const [score, setScore] = useState({'X':0, 'O':0});
-  const [boardSize, changeBoardSize] = useState(3);
+  const [boardSize, changeBoardSize] = useState(3); // covered
   
   /* --- HELPER FUNCTIONS --- */
 
