@@ -4,7 +4,8 @@ import { useStore } from '../Store/useStore.js';
 
 const Board = () => {
 
-  // State
+  /* STATE */
+
   const {
     boardSize, setBoardSize,
     board, setBoard,
@@ -17,7 +18,23 @@ const Board = () => {
     inactivePlayer
   } = useStore((state) => state);
 
-  // Functions
+  /* GAME FUNCTIONS */
+
+  // Player Setup
+
+  const setUpPlayers = (event) => {
+    event.preventDefault();
+    const player1Field = document.getElementById('player1-name').value;
+    const player2Field = document.getElementById('player2-name').value;
+    const {player1, player2} = checkFieldEntries(player1Field, player2Field);
+    setPlayers(player1, player2);
+    setScore({
+      [player1]: 0,
+      [player2]: 0
+    });
+    setGameReady(true);
+  };
+
   const checkFieldEntries = (player1Field, player2Field) => {
     let player1 = player1Field.replace(/\s*/, '').length ? player1Field : 'X';
     let player2 = player2Field.replace(/\s*/, '').length ? player2Field : 'O';
@@ -33,30 +50,28 @@ const Board = () => {
     };
   }
 
-  const setUpPlayers = (event) => {
-    event.preventDefault();
-    const player1Field = document.getElementById('player1-name').value;
-    const player2Field = document.getElementById('player2-name').value;
-    const {player1, player2} = checkFieldEntries(player1Field, player2Field);
-    setPlayers(player1, player2);
-    setScore({
-      [player1]: 0,
-      [player2]: 0
-    });
-    setGameReady(true);
-  };
+  // Board Changes
 
-  const winner = () => {
-    const newScore = {...score};
-    newScore[inactivePlayer]++;
-    setGameOver(true);
-    setMessage(`Player ${players.valueRef[inactivePlayer]} wins!!!`);
-    setScore(newScore);
+  const increaseBoard = () => {
+    if(boardSize < 7) setBoardSize(boardSize + 1);
   };
   
-  const draw = () => {
-    setGameOver(true);
-    setMessage('It\'s a Draw!!!');
+  const decreaseBoard = () => {
+    if(boardSize > 3) setBoardSize(boardSize - 1);
+  };
+
+  // End Game Functions
+
+  const checkForWinner = () => {
+    const newBoard = {...board};
+    let victoryCondition = ``;
+    for(let counter = 0; counter < boardSize; counter++) {
+      victoryCondition += `${inactivePlayer}`;
+    };
+    checkRows(newBoard, victoryCondition);
+    checkColumns(newBoard, victoryCondition);
+    checkDiagonals(newBoard, victoryCondition);
+    if(newBoard.dashes === 0) return draw();
   };
 
   const checkRows = (newBoard, victoryCondition) => {
@@ -91,18 +106,21 @@ const Board = () => {
     }
     if(diagonal === victoryCondition) return winner();
   };
-  
-  const checkForWinner = () => {
-    const newBoard = {...board};
-    let victoryCondition = ``;
-    for(let counter = 0; counter < boardSize; counter++) {
-      victoryCondition += `${inactivePlayer}`;
-    };
-    checkRows(newBoard, victoryCondition);
-    checkColumns(newBoard, victoryCondition);
-    checkDiagonals(newBoard, victoryCondition);
-    if(newBoard.dashes === 0) return draw();
+
+  const winner = () => {
+    const newScore = {...score};
+    newScore[inactivePlayer]++;
+    setGameOver(true);
+    setMessage(`Player ${players.valueRef[inactivePlayer]} wins!!!`);
+    setScore(newScore);
   };
+  
+  const draw = () => {
+    setGameOver(true);
+    setMessage('It\'s a Draw!!!');
+  };
+
+  // Resets
 
   const softReset = () => {
     const newBoard = {};
@@ -125,21 +143,17 @@ const Board = () => {
     setScore({[player1]: 0, [player2]: 0});
   };
 
-  const increaseBoard = () => {
-    if(boardSize < 7) setBoardSize(boardSize + 1);
-  };
-  
-  const decreaseBoard = () => {
-    if(boardSize > 3) setBoardSize(boardSize - 1);
-  };
-
   const restartGame = () => {
     fullReset();
     setGameReady(false);
   }
 
+  /* USEEFFECT HOOKS */
+
   useEffect(fullReset, [boardSize]);
   useEffect(checkForWinner, [board]);
+
+  /* ROW GENERATION */
 
   const rows = [];
   
