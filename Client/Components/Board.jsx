@@ -18,12 +18,26 @@ const Board = () => {
   } = useStore((state) => state);
 
   // Functions
+  const checkFieldEntries = (player1Field, player2Field) => {
+    let player1 = player1Field.replace(/\s*/, '').length ? player1Field : 'X';
+    let player2 = player2Field.replace(/\s*/, '').length ? player2Field : 'O';
+    if(player1Field.replace(/\s*/, '') === 'X') player1 = 'Joker';
+    if(player2Field.replace(/\s*/, '') === 'O') player2 = 'Riddler';
+    if(player1Field.replace(/\s*/, '') === player2Field.replace(/\s*/, '') && player1Field.replace(/\s*/, '').length) {
+      player1 = 'Max Carver';
+      player2 = 'Charlie Carver';
+    };
+    return {
+      player1: player1,
+      player2: player2
+    };
+  }
+
   const setUpPlayers = (event) => {
     event.preventDefault();
     const player1Field = document.getElementById('player1-name').value;
     const player2Field = document.getElementById('player2-name').value;
-    const player1 = player1Field.length ? player1Field : 'X';
-    const player2 = player2Field.length ? player2Field : 'O';
+    const {player1, player2} = checkFieldEntries(player1Field, player2Field);
     setPlayers(player1, player2);
     setScore({
       [player1]: 0,
@@ -44,15 +58,8 @@ const Board = () => {
     setGameOver(true);
     setMessage('It\'s a Draw!!!');
   };
-  
-  const checkForWinner = () => {
-    const newBoard = {...board};
-    let victoryCondition = ``;
-  
-    for(let counter = 0; counter < boardSize; counter++) {
-      victoryCondition += `${inactivePlayer}`;
-    };
-  
+
+  const checkRows = (newBoard, victoryCondition) => {
     for(let row = 0; row < boardSize; row++) {
       let result = '';
       for(let column = 0; column < boardSize; column++) {
@@ -60,7 +67,9 @@ const Board = () => {
       };
       if(result === victoryCondition) return winner();
     };
+  };
 
+  const checkColumns = (newBoard, victoryCondition) => {
     for(let column = 0; column < boardSize; column++) {
       let result = '';
       for(let row = 0; row < boardSize; row++) {
@@ -68,19 +77,30 @@ const Board = () => {
       };
       if(result === victoryCondition) return winner();
     };
+  };
 
-    let diagonal1 = '';
+  const checkDiagonals = (newBoard, victoryCondition) => {
+    let diagonal = '';
     for(let row = 0; row < boardSize; row++) {
-      diagonal1 += `${newBoard[`${row}${row}`]}`;
+      diagonal += `${newBoard[`${row}${row}`]}`;
     };
-    if(diagonal1 === victoryCondition) return winner();
-
-    let diagonal2 = '';
+    if(diagonal === victoryCondition) return winner();
+    diagonal = '';
     for(let row = 0; row < boardSize; row++) {
-      diagonal2 += `${newBoard[`${row}${boardSize-1-row}`]}`;
+      diagonal += `${newBoard[`${row}${boardSize-1-row}`]}`;
     }
-    if(diagonal2 === victoryCondition) return winner();
-
+    if(diagonal === victoryCondition) return winner();
+  };
+  
+  const checkForWinner = () => {
+    const newBoard = {...board};
+    let victoryCondition = ``;
+    for(let counter = 0; counter < boardSize; counter++) {
+      victoryCondition += `${inactivePlayer}`;
+    };
+    checkRows(newBoard, victoryCondition);
+    checkColumns(newBoard, victoryCondition);
+    checkDiagonals(newBoard, victoryCondition);
     if(newBoard.dashes === 0) return draw();
   };
 
