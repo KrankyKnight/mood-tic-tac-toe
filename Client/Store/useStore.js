@@ -42,8 +42,6 @@ export const useStore = create((set) => ({
       }
     }
   })),
-
-  /* SETTERS */
   setCurrentPlayer: (newCurrentPlayer) => set((state) => {
     return {
       currentPlayer: newCurrentPlayer,
