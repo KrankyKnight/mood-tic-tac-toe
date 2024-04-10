@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { useBoardStore } from '../Store/useBoardStore.js';
-import { usePlayerStore } from '../Store/usePlayerStore.js';
-import { useGameStore } from '../Store/useGameStore.js';
-import Row from './Row.jsx';
-import StartMenu from './StartMenu.jsx';
-import ResetButton from './ResetButton.jsx';
+import { useBoardStore, usePlayerStore, useGameStore } from '../../Store';
+import Row from '../Row';
+import StartMenu from '../StartMenu';
+import ResetButton from '../ResetButton';
 
 const Board = () => {
 

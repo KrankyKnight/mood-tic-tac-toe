@@ -1,7 +1,5 @@
 import React from 'react';
-import { useBoardStore } from '../Store/useBoardStore.js';
-import { usePlayerStore } from '../Store/usePlayerStore.js';
-import { useGameStore } from '../Store/useGameStore.js';
+import { useBoardStore, usePlayerStore, useGameStore } from '../../Store';
 
 const Box = (props) => {
 

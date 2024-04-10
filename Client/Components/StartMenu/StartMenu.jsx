@@ -1,6 +1,5 @@
 import React from "react";
-import { usePlayerStore } from "../Store/usePlayerStore";
-import { useGameStore } from "../Store/useGameStore";
+import { usePlayerStore, useGameStore } from "../../Store";
 
 const StartMenu = () => {
 

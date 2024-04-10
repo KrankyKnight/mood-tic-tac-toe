@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import Box from './Box.jsx';
-import { useBoardStore } from "../Store/useBoardStore.js";
+import Box from '../Box';
+import { useBoardStore } from "../../Store";
 
 const Row = (props) => {
   
