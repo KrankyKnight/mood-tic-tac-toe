@@ -20,33 +20,33 @@ export const usePlayerStore = create((set) => ({
   
 
   setPlayer1: (name) => set(() => ({
-    player1: name
+    player1: name ? name : 'X'
   })),
   setPlayer2: (name) => set(() => ({
-    player2: name
+    player2: name ? name : 'O'
   })),
-  setplayerToSymbol: (player1, player2) => set(() => ({
+  setPlayerToSymbol: (player1, player2) => set(() => ({
     playerToSymbol: {
       [player1]: 'X',
       [player2]: 'O'
     }
   })),
-  setsymbolToPlayer: (player1, player2) => set(() => ({
+  setSymbolToPlayer: (player1, player2) => set(() => ({
     symbolToPlayer: {
       'X': player1,
       'O': player2
     }
   })),
-  setplayerToPlayer: (player1, player2) => set(() => ({
+  setPlayerToPlayer: (player1, player2) => set(() => ({
     playerToPlayer: {
       [player1]: player2,
       [player2]: player1
     }
   })),
-  setPlayers: (player1 = 'X', player2 = 'O') => set((state) => {
-    state.setplayerToSymbol(player1, player2);
-    state.setsymbolToPlayer(player1, player2);
-    state.setplayerToPlayer(player1, player2);
+  setPlayers: () => set((state) => {
+    state.setPlayerToSymbol(state.player1, state.player2);
+    state.setSymbolToPlayer(state.player1, state.player2);
+    state.setPlayerToPlayer(state.player1, state.player2);
     return {};
   }),
   setCurrentPlayer: (newCurrentPlayer) => set(() => ({

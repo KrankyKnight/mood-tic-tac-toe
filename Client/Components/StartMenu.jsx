@@ -4,12 +4,9 @@ import { useGameStore } from "../Store/useGameStore";
 
 const StartMenu = () => {
 
-  const player1 = usePlayerStore((state) => state.player1);
-  const player2 = usePlayerStore((state) => state.player2);
   const setPlayer1 = usePlayerStore((state) => state.setPlayer1);
   const setPlayer2 = usePlayerStore((state) => state.setPlayer2);
   const setPlayers = usePlayerStore((state) => state.setPlayers);
-  const setScore = useGameStore((state) => state.setScore);
   const setGameReady = useGameStore((state) => state.setGameReady);
 
   const setupPlayers = (event) => {
@@ -17,11 +14,7 @@ const StartMenu = () => {
     const player1Field = document.getElementById('player1-name').value;
     const player2Field = document.getElementById('player2-name').value;
     checkFieldEntries(player1Field, player2Field);
-    setPlayers(player1, player2);
-    setScore({
-      [player1]: 0,
-      [player2]: 0
-    });
+    setPlayers();
     setGameReady(true);
   };
 

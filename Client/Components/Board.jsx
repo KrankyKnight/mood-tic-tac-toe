@@ -13,8 +13,9 @@ const Board = () => {
   const setBoard = useBoardStore((state) => state.setBoard);
   const increaseBoard = useBoardStore((state) => state.increaseBoard);
   const decreaseBoard = useBoardStore((state) => state.decreaseBoard);
+  const player1 = usePlayerStore((state) => state.player1);
+  const player2 = usePlayerStore((state) => state.player2);
   const symbolToPlayer = usePlayerStore((state) => state.symbolToPlayer);
-  const playerToSymbol = usePlayerStore((state) => state.playerToSymbol);
   const currentPlayer = usePlayerStore((state) => state.currentPlayer);
   const inactivePlayer = usePlayerStore((state) => state.inactivePlayer);
   const setCurrentPlayer = usePlayerStore((state) => state.setCurrentPlayer);
@@ -48,8 +49,6 @@ const Board = () => {
   const hardReset = (event) => {
     if(event) event.preventDefault();
     softReset();
-    const player1 = symbolToPlayer['X'];
-    const player2 = symbolToPlayer['O'];
     setScore({[player1]: 0, [player2]: 0});
   };
 
@@ -120,6 +119,10 @@ const Board = () => {
 
   /* USEEFFECT HOOKS */
   useEffect(hardReset, [boardSize]);
+  useEffect(() => setScore({
+    [player1]: 0,
+    [player2]: 0
+  }), [player1, player2]);
   useEffect(checkForWinner, [board]);
 
   /* ROW GENERATION */
@@ -174,10 +177,10 @@ const Board = () => {
           <h3>SCORES</h3>
           <p>
             <span className='player-1'>
-              {`Player: ${symbolToPlayer['X']}: ${score[symbolToPlayer['X']]}`}
+              {`Player: ${player1}: ${score[player1]}`}
             </span>
             <span className='player-2'>
-              {`Player: ${symbolToPlayer['O']}: ${score[symbolToPlayer['O']]}`}
+              {`Player: ${player2}: ${score[player2]}`}
             </span>
           </p>
         <ResetButton 
