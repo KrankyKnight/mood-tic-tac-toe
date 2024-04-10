@@ -4,7 +4,20 @@ import Row from '../Row';
 import StartMenu from '../StartMenu';
 import ResetButton from '../ResetButton';
 
-const Board = () => {
+type propsType = {
+  key: string,
+  children: string
+}
+
+type Board = {
+  [key: string]: string
+};
+
+type FullBoard = Board & {
+  dashes?: number
+};
+
+const Board = (_props: propsType): JSX.Element => {
 
   const board =  useBoardStore((state) => state.board);
   const boardSize = useBoardStore((state) => state.boardSize);
@@ -29,9 +42,9 @@ const Board = () => {
   /* GAME FUNCTIONS */
 
   // Resets
-  const softReset = (event) => {
+  const softReset = (event?: MouseEvent): void => {
     if(event) event.preventDefault();
-    const newBoard = {};
+    const newBoard: FullBoard = {};
     for(let i = 0; i < boardSize; i++){
       for(let j = 0; j < boardSize; j++){
         newBoard[`${i}${j}`] = '-';
@@ -44,13 +57,13 @@ const Board = () => {
     setCurrentPlayer('X');
   };
 
-  const hardReset = (event) => {
+  const hardReset = (event?: MouseEvent) => {
     if(event) event.preventDefault();
     softReset();
     setScore({[player1]: 0, [player2]: 0});
   };
 
-  const restartGame = (event) => {
+  const restartGame = (event: MouseEvent) => {
     if(event) event.preventDefault();
     hardReset();
     setGameReady(false);
@@ -59,7 +72,7 @@ const Board = () => {
   // End Game Functions
   const checkForWinner = () => {
     const newBoard = {...board};
-    let victoryCondition = ``;
+    let victoryCondition: string = ``;
     for(let counter = 0; counter < boardSize; counter++) {
       victoryCondition += `${inactivePlayer}`;
     };
@@ -69,7 +82,7 @@ const Board = () => {
     if(newBoard.dashes === 0) return draw();
   };
 
-  const checkRows = (newBoard, victoryCondition) => {
+  const checkRows = (newBoard: FullBoard, victoryCondition: string) => {
     for(let row = 0; row < boardSize; row++) {
       let result = '';
       for(let column = 0; column < boardSize; column++) {
@@ -79,7 +92,7 @@ const Board = () => {
     };
   };
 
-  const checkColumns = (newBoard, victoryCondition) => {
+  const checkColumns = (newBoard: FullBoard, victoryCondition: string) => {
     for(let column = 0; column < boardSize; column++) {
       let result = '';
       for(let row = 0; row < boardSize; row++) {
@@ -89,7 +102,7 @@ const Board = () => {
     };
   };
 
-  const checkDiagonals = (newBoard, victoryCondition) => {
+  const checkDiagonals = (newBoard: FullBoard, victoryCondition: string) => {
     let diagonal = '';
     for(let row = 0; row < boardSize; row++) {
       diagonal += `${newBoard[`${row}${row}`]}`;
@@ -125,7 +138,7 @@ const Board = () => {
 
   /* ROW GENERATION */
 
-  const rows = [];
+  const rows: JSX.Element[] = [];
   
   for(let i = 0; i < boardSize; i++){
     rows.push(

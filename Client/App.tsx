@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import Board from './Components/Board';
 
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <div>
       <Board key="game-board">
