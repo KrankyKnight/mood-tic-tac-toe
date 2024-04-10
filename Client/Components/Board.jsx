@@ -1,29 +1,63 @@
 import React, { useEffect } from 'react';
-import { useStore } from '../Store/useStore.js';
+import { useBoardStore } from '../Store/useBoardStore.js';
+import { usePlayerStore } from '../Store/usePlayerStore.js';
+import { useGameStore } from '../Store/useGameStore.js';
 import Row from './Row.jsx';
 import StartMenu from './StartMenu.jsx';
+import ResetButton from './ResetButton.jsx';
 
 const Board = () => {
 
-  /* STATE */
-
-  const {
-    boardSize, board, players, message, currentPlayer, score, gameOver, 
-    gameReady, inactivePlayer, setBoard, setMessage, setCurrentPlayer, 
-    setGameOver, setGameReady, setScore, setBoardSize
-  } = useStore((state) => state);
+  const board =  useBoardStore((state) => state.board);
+  const boardSize = useBoardStore((state) => state.boardSize);
+  const setBoard = useBoardStore((state) => state.setBoard);
+  const increaseBoard = useBoardStore((state) => state.increaseBoard);
+  const decreaseBoard = useBoardStore((state) => state.decreaseBoard);
+  const symbolToPlayer = usePlayerStore((state) => state.symbolToPlayer);
+  const playerToSymbol = usePlayerStore((state) => state.playerToSymbol);
+  const currentPlayer = usePlayerStore((state) => state.currentPlayer);
+  const inactivePlayer = usePlayerStore((state) => state.inactivePlayer);
+  const setCurrentPlayer = usePlayerStore((state) => state.setCurrentPlayer);
+  const gameReady = useGameStore((state) => state.gameReady);
+  const gameOver = useGameStore((state) => state.gameOver);
+  const message = useGameStore((state) => state.message);
+  const score = useGameStore((state) => state.score);
+  const setGameOver = useGameStore((state) => state.setGameOver);
+  const setGameReady = useGameStore((state) => state.setGameReady);
+  const setMessage = useGameStore((state) => state.setMessage);
+  const setScore = useGameStore((state) => state.setScore);
 
   /* GAME FUNCTIONS */
 
-  // Board Changes
-
-  const increaseBoard = () => {
-    if(boardSize < 7) setBoardSize(boardSize + 1);
+  // Resets
+  const softReset = (event) => {
+    if(event) event.preventDefault();
+    const newBoard = {};
+    for(let i = 0; i < boardSize; i++){
+      for(let j = 0; j < boardSize; j++){
+        newBoard[`${i}${j}`] = '-';
+      };
+    };
+    newBoard.dashes = Math.pow(boardSize, 2);
+    setBoard(newBoard)
+    setGameOver(false);
+    setMessage('');
+    setCurrentPlayer('X');
   };
 
-  const decreaseBoard = () => {
-    if(boardSize > 3) setBoardSize(boardSize - 1);
+  const hardReset = (event) => {
+    if(event) event.preventDefault();
+    softReset();
+    const player1 = symbolToPlayer['X'];
+    const player2 = symbolToPlayer['O'];
+    setScore({[player1]: 0, [player2]: 0});
   };
+
+  const restartGame = (event) => {
+    if(event) event.preventDefault();
+    hardReset();
+    setGameReady(false);
+  }
 
   // End Game Functions
   const checkForWinner = () => {
@@ -73,9 +107,9 @@ const Board = () => {
 
   const winner = () => {
     const newScore = {...score};
-    newScore[inactivePlayer]++;
+    newScore[symbolToPlayer[inactivePlayer]]++;
     setGameOver(true);
-    setMessage(`Player ${players.valueRef[inactivePlayer]} wins!!!`);
+    setMessage(`Player ${symbolToPlayer[inactivePlayer]} wins!!!`);
     setScore(newScore);
   };
   
@@ -84,36 +118,8 @@ const Board = () => {
     setMessage('It\'s a Draw!!!');
   };
 
-  // Resets
-  const softReset = () => {
-    const newBoard = {};
-    for(let i = 0; i < boardSize; i++){
-      for(let j = 0; j < boardSize; j++){
-        newBoard[`${i}${j}`] = '-';
-      };
-    };
-    newBoard.dashes = Math.pow(boardSize, 2);
-    setBoard(newBoard)
-    setGameOver(false);
-    setMessage('');
-    setCurrentPlayer('X');
-  };
-  
-  const fullReset = () => {
-    softReset();
-    const player1 = players.valueRef['X'];
-    const player2 = players.valueRef['O'];
-    setScore({[player1]: 0, [player2]: 0});
-  };
-
-  const restartGame = () => {
-    fullReset();
-    setGameReady(false);
-  }
-
   /* USEEFFECT HOOKS */
-
-  useEffect(fullReset, [boardSize]);
+  useEffect(hardReset, [boardSize]);
   useEffect(checkForWinner, [board]);
 
   /* ROW GENERATION */
@@ -145,35 +151,47 @@ const Board = () => {
             </button>
           </h1>
           <h2>
-            Current Player: {players.valueRef[currentPlayer] + ': ' + currentPlayer} 
+            Current Player: {symbolToPlayer[currentPlayer] + ': ' + currentPlayer} 
             {!gameOver && 
-              <button className='soft-reset word-glow' onClick={softReset}>
-                Soft Reset
-              </button>}
+              <ResetButton 
+                key='duringGameReset' 
+                resetType='soft-reset'
+                resetSelection={softReset} 
+                buttonLabel='Soft Reset'
+              />}
           </h2>
           {message && 
             <div className='end-game'>
               {message} 
-              <button className='word-glow' id='reset-board' onClick={softReset}>
-                Reset Board
-              </button>
+              <ResetButton 
+                key='endGameReset' 
+                resetType='soft-reset'
+                resetSelection={softReset}
+                buttonLabel='Reset Board'
+              />
             </div>}
           {rows}
           <h3>SCORES</h3>
           <p>
             <span className='player-1'>
-              {`Player: ${players.valueRef['X']}: ${score[players.valueRef['X']]}`}
+              {`Player: ${symbolToPlayer['X']}: ${score[symbolToPlayer['X']]}`}
             </span>
             <span className='player-2'>
-              {`Player: ${players.valueRef['O']}: ${score[players.valueRef['O']]}`}
+              {`Player: ${symbolToPlayer['O']}: ${score[symbolToPlayer['O']]}`}
             </span>
           </p>
-        <button className='word-glow' id='full-reset' onClick={fullReset}>
-          Full Reset
-        </button>
-        <button className='word-glow' id='full-reset' onClick={restartGame}>
-          Resart Game
-        </button>
+        <ResetButton 
+          key='duringGamehardReset' 
+          resetType='hard-reset'
+          resetSelection={hardReset}
+          buttonLabel='Hard Reset'
+        />
+        <ResetButton 
+          key='suringGameRestart' 
+          resetType='restart-reset'
+          resetSelection={restartGame} 
+          buttonLabel='Restart Game'
+        />
       </> :
       <>
         <StartMenu />

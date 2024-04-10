@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import Box from './Box.jsx';
-import { useStore } from "../Store/useStore.js";
+import { useBoardStore } from "../Store/useBoardStore.js";
 
 const Row = (props) => {
   
-  const boardSize = useStore((state) => state.boardSize);
   const {index} = props;
+  const boardSize = useBoardStore((state) => state.boardSize);
 
   const boxes = [];
 
