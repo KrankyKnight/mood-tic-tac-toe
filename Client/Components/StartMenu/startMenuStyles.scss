@@ -1,0 +1,61 @@
+@import '../../GlobalStyles/styles.scss';
+
+.startMenuGrid {
+  border: solid 3px red;
+  position: fixed;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid:
+    [row1-start] ". . ." 14vh [row1-end]
+    [row2-start] ". title ." 18vh [row2-end]
+    [row3-start] ". input ." 18vh [row3-end]
+    [row4-start] ". start ." 18vh [row4-end]
+    [row5-start] ". . ." 18vh [row5-end]
+    [row6-start] ". . ." 14vh [row6-end]
+    / 29vw 42vw 29vw;
+    .title {
+      grid-area: title;
+      justify-self: center;
+    }
+    .input {
+      grid-area: input;
+      justify-self: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      .inputField {
+        height: 57px;
+        width: 160px;
+        border-radius: 12px;
+        border: 3px solid $sMMediumBlue2;
+        background-color: $sMLightBlue1;
+        text-align: center;
+      }
+      ::placeholder {
+        color: $sMDarkBlue2;
+        font-family: "NTR", sans-serif;
+        font-size: 36px;
+        transform: translateY(10%);
+      }
+      span {
+        font-family: "NTR", sans-serif;
+        font-size: 28px;
+        font-weight: bold;
+        color: $sMDarkBlue2;
+        letter-spacing: .2rem;
+        align-self: center;
+      }
+    }
+    .start {
+      grid-area: start;
+      justify-self: center;
+    }
+}
+
+
+
+
+

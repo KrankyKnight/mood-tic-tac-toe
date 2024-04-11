@@ -42,7 +42,7 @@ const Board = (_props: propsType): JSX.Element => {
   /* GAME FUNCTIONS */
 
   // Resets
-  const softReset = (event?: MouseEvent): void => {
+  const softReset = (event?: React.MouseEvent<HTMLElement>): void => {
     if(event) event.preventDefault();
     const newBoard: FullBoard = {};
     for(let i = 0; i < boardSize; i++){
@@ -57,13 +57,13 @@ const Board = (_props: propsType): JSX.Element => {
     setCurrentPlayer('X');
   };
 
-  const hardReset = (event?: MouseEvent) => {
+  const hardReset = (event?: React.MouseEvent<HTMLElement>) => {
     if(event) event.preventDefault();
     softReset();
     setScore({[player1]: 0, [player2]: 0});
   };
 
-  const restartGame = (event: MouseEvent) => {
+  const restartGame = (event: React.MouseEvent<HTMLElement>) => {
     if(event) event.preventDefault();
     hardReset();
     setGameReady(false);

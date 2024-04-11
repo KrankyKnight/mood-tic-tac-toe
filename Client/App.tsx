@@ -5,6 +5,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Board from './Components/Board';
+import './appStyles.scss';
 
 
 const App = (): JSX.Element => {

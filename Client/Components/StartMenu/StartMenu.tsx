@@ -1,5 +1,6 @@
 import React from "react";
 import { usePlayerStore, useGameStore } from "../../Store";
+import './startMenuStyles.scss';
 
 const StartMenu = () => {
 
@@ -8,16 +9,16 @@ const StartMenu = () => {
   const setPlayers = usePlayerStore((state) => state.setPlayers);
   const setGameReady = useGameStore((state) => state.setGameReady);
 
-  const setupPlayers = (event) => {
+  const setupPlayers = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const player1Field = document.getElementById('player1-name').value;
-    const player2Field = document.getElementById('player2-name').value;
+    const player1Field = (document.getElementById('player1-name') as HTMLInputElement).value;
+    const player2Field = (document.getElementById('player2-name') as HTMLInputElement).value;
     checkFieldEntries(player1Field, player2Field);
     setPlayers();
     setGameReady(true);
   };
 
-  const checkFieldEntries = (player1Field, player2Field) => {
+  const checkFieldEntries = (player1Field: string, player2Field: string) => {
     let tempPlayer1 = player1Field.replace(/\s*/, '').length ? player1Field : 'X';
     let tempPlayer2 = player2Field.replace(/\s*/, '').length ? player2Field : 'O';
     if(player1Field.replace(/\s*/, '') === 'X') tempPlayer1 = 'Joker';
@@ -31,10 +32,14 @@ const StartMenu = () => {
   };
 
   return (
-    <div>
-      <input id='player1-name' type='text'/>
-      <input id='player2-name' type='text'/>
-      <button id="game-start-button" onClick={setupPlayers}>Start</button>
+    <div className='startMenuGrid'>
+      <h1 className='title' >TIC TAC TOE</h1>
+      <div className='input'>
+        <input id='player1-name' className='inputField' placeholder='NAME' type='text'/>
+        <span>VS</span>
+        <input id='player2-name' className='inputField' placeholder='NAME' type='text'/>
+      </div>
+      <button className='start' id="game-start-button" onClick={setupPlayers}>START</button>
     </div>
   )
 }

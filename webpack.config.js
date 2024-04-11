@@ -29,6 +29,20 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.s?css$/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader"
+          },
+          {
+            loader: "sass-loader"
+          }
+        ]
+      }
     ],
   },
   plugins: [
@@ -36,9 +50,9 @@ module.exports = {
       template: './Client/index.html',
       filename: './index.html',
     }),
-    new CopyPlugin({
-      patterns: [{ from: './Client/style.css' }],
-    }),
+    // new CopyPlugin({
+    //   patterns: [{ from: './Client/style.css' }],
+    // }),
   ],
   devServer: {
     static: {
