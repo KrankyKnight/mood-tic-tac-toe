@@ -1,0 +1,24 @@
+#game {
+  // border: 10px solid red;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid:
+    ". . . . . . . . . . ." 3.8vh //empty
+    ". boardSettings . title title title title title title title ." 98px
+    ". . . . . . . . . . ." 56px //empty
+    ". . . . name name name name name . ." 48px
+    ". . . . . . . . . . ." 33px // empty
+    ". . . board board board board board board board ." 25px
+    ". . . board board board board board board board ." 7.2vw
+    ". . . board board board board board board board ." 25px
+    ". . . board board board board board board board ." 7.2vw
+    ". scoreLabel . board board board board board board board ." 25px
+    ". scoreLabel . board board board board board board board ." 3.5vw
+    ". scoreDisplay . board board board board board board board ." 3.7vw
+    ". . . board board board board board board board ." 25px
+    ". . . . . . . . . . ." 22px
+    ". . . . . . reset . restart . ." 65px
+    ". . . . . . . . . . ." 6.7vh
+    / 22vw 10.2vw 3.2vw 1.6vw 7.2vw 2.3vw 7.2vw 2.3vw 7.2vw 1.6vw 35.2vw;
+}

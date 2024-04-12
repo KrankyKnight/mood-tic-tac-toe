@@ -3,6 +3,7 @@ import { useBoardStore, usePlayerStore, useGameStore } from '../../Store';
 import Row from '../Row';
 import StartMenu from '../StartMenu';
 import ResetButton from '../ResetButton';
+import './styles.scss';
 
 type propsType = {
   key: string,
@@ -184,7 +185,9 @@ const Board = (_props: propsType): JSX.Element => {
                 buttonLabel='Reset Board'
               />
             </div>}
-          {rows}
+          <div id='board'>
+            {rows}
+          </div>
           <h3>SCORES</h3>
           <p>
             <span className='player-1'>

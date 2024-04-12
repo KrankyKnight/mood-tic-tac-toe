@@ -32,7 +32,7 @@ const StartMenu = () => {
   };
 
   return (
-    <div className='startMenuGrid'>
+    <div className='startMenu'>
       <h1 className='title' >TIC TAC TOE</h1>
       <div className='input'>
         <input id='player1-name' className='inputField' placeholder='NAME' type='text'/>
