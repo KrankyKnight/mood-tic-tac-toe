@@ -36,7 +36,9 @@ const StartMenu = () => {
       <h1 className='title' >TIC TAC TOE</h1>
       <div className='input'>
         <input id='player1-name' className='inputField' placeholder='NAME' type='text'/>
-        <span>VS</span>
+        <div className="vs">
+          <span>vs</span>   
+        </div>
         <input id='player2-name' className='inputField' placeholder='NAME' type='text'/>
       </div>
       <button className='start' id="game-start-button" onClick={setupPlayers}>START</button>

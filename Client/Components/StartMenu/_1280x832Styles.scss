@@ -1,0 +1,110 @@
+$heightPadding: 14vh;
+$contentWidth: calc(100vw - (29vw * 2));
+
+$titleHeight: 98px;
+$titleFontSize: 96px;
+$inputHeight: 122px;
+$inputFieldWidth: 159px;
+$inputFieldHeight: 57px;
+$placeholderHeight: 57px;
+$placeholderFontSize: 36px;
+$placeholderVerticalTranslate: 4px;
+$vsHeight: 57px;
+$vsWidth: 58px;
+$vsVerticalTranslate: 2px;
+$vsFontSize: 40px;
+$vsLetterSpacing: 2px;
+$startHeight: 66px;
+$startWidth: 98px;
+$startFontSize: 24px;
+$startPaddingTop: 6px;
+
+@media (max-height: 832px){
+  .startMenuGrid {
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: $heightPadding 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+    .title {
+      height: $titleHeight;
+      flex-shrink: 0;
+      color: $textColor1;
+      text-align: center;
+      -webkit-text-stroke-width: 3;
+      -webkit-text-stroke-color: $textColor1;
+      font-family: "NTR";
+      font-size: $titleFontSize;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    .input {
+      height: $inputHeight;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: row;
+      .inputField {
+        box-sizing: border-box;
+        padding: 0px;
+        width: $inputFieldWidth;
+        height: $inputFieldHeight;
+        flex-shrink: 0;
+        border-radius: 12px;
+        border: 3px solid $inputBorder;
+        background: $inputBackground;
+      }
+      ::placeholder {
+        color: $textColor1;
+        height: $placeholderHeight;
+        font-family: "NTR";
+        text-align: center;
+        font-size: $placeholderFontSize;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        translate: 0px $placeholderVerticalTranslate;
+      }
+      .vs {
+        display: flex;
+        height: $vsHeight;
+        width: $vsWidth;
+        flex-direction: column;
+        justify-content: center;
+        flex-shrink: 0;
+        translate: 0px $vsVerticalTranslate;
+        span {
+          color: $textColor1;
+          text-align: center;
+          font-family: "NTR";
+          font-size: $vsFontSize;
+          font-style: normal;
+          font-weight: 400;
+          letter-spacing: $vsLetterSpacing;
+        }
+      }
+    }
+    .start {
+      box-sizing: border-box;
+      height: $startHeight;
+      width: $startWidth;
+      flex-shrink: 0;
+      border-radius: 12px;
+      border: 3px solid $lightBorder;
+      background: $buttonBackground;
+      color: $buttonText;
+      -webkit-text-stroke-width: 0.5;
+      -webkit-text-stroke-color: $buttonText;
+      font-family: "NTR";
+      font-size: $startFontSize;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1;
+      padding-top: $startPaddingTop;
+    }
+  }
+}
